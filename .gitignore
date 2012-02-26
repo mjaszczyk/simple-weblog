@@ -1,6 +1,5 @@
 /.env
 /_env
-/static
 /site_media
 /base.sqlite
 *.pyc
