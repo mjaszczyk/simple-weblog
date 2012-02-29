@@ -1,5 +1,5 @@
 {% spaceless %}
-{% load posts %}<!DOCTYPE html>
+{% load posts %}{% load url from future %}<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -33,6 +33,7 @@
           <a class="brand" href="/">Weblog</a>
           <div class="nav-collapse">
             <ul class="nav">
+                <li><a href="{% url 'posts.feed' %}">Feed</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -52,7 +53,7 @@
                         <li class="nav-header">Archive</li>
                         {% posts_archive_years 10 as archive_years %}
                         {% for year in archive_years %}
-                            <li><a href="{% url posts.list.archive year=year.year %}">{{ year.year }}</a></li>
+                            <li><a href="{% url 'posts.list.archive' year=year.year %}">{{ year.year }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

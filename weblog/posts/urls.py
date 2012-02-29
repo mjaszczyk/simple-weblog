@@ -1,12 +1,20 @@
+from __future__ import absolute_import
 from django.conf.urls import patterns, url
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.date_based import archive_year
 from tagging.views import tagged_object_list
-from weblog.posts.models import Post
+
+from .models import Post
+from .feeds import PostsFeed
+
 
 BASE_POSTS_QS = Post.objects.all()
 
 urlpatterns = patterns('',
+    
+    # RSS feed
+    url(r'feed/$', PostsFeed(), name='posts.feed'),
+
     # Post detail URL
     url(r'post/([a-zA-Z0-9\-_]+),(?P<object_id>\d+)/$', object_detail,
         {'queryset': BASE_POSTS_QS}, name='posts.detail'),
