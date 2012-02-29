@@ -1,3 +1,34 @@
-{% for post in object_list %}
-    {{post}}<br />
-{% endfor %}
+{% extends 'layout.html' %}
+{% load url from future %}
+{% load comments humanize %}
+
+
+{% block content %}
+    {% for post in object_list %}
+        {% get_comment_count for post as comment_count %}
+        <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a>
+            <small>{{ post.create_time|naturalday:"d E y" }}</small>
+        </h2>
+        {% for tag in post.get_tags %}
+            <a href="{% url 'posts.list.tag' tag=tag %}" class="label">{{tag}}</a>
+        {% endfor %}
+        {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
+        <p>{{post.content|truncatewords:20}}</p>
+    {% endfor %}
+
+    {# pagination #}
+    {% if page_obj.has_other_pages %}
+        <ul class="pager">
+            {% if page_obj.has_next %}
+                <li class="previous">
+                    <a href="?page={{page_obj.next_page_number}}">&larr; Older</a>
+                </li>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <li class="next">
+                    <a href="?page={{page_obj.previous_page_number}}">Newer &rarr;</a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock %}

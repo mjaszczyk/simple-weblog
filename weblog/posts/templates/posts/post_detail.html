@@ -1,7 +1,30 @@
-{% load comments %}
+{% extends 'layout.html' %}
+{% load url from future %}
+{% load comments humanize %}
 
-{{object}}
-<br />--<br />
-{% render_comment_list for object %}
-<br />--<br />
-{% render_comment_form for object %}
+{% block content %}
+    {% get_comment_count for object as comment_count %}
+    <h1>{{object.title}} <small>{{ object.create_time|naturalday:"d E y" }}</small></h1>
+    <p>
+        {% for tag in object.get_tags %}
+            <a href="{% url 'posts.list.tag' tag=tag %}" class="label">{{tag}}</a>
+        {% endfor %}
+        {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
+    </p>
+
+    <p>{{object.content}}</p>
+
+    <div class="row">
+        <div class="span12"><br /></div>
+    </div>
+    {# comments #}
+    {% get_comment_list for object as comment_list %}
+    {% for comment in comment_list %}
+        <blockquote>
+            <p>{{comment.comment}}</p>
+            <small>Posted by: {{ comment.user_name }}, {{ comment.submit_date|naturalday:"d E y" }}</small>
+        </blockquote>
+    {% endfor %}
+
+    {% render_comment_form for object %}
+{% endblock %}
