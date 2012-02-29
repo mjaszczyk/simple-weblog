@@ -1,23 +1,22 @@
 {% extends 'layout.html' %}
 {% load url from future %}
-{% load comments humanize %}
+{% load markup_tags comments humanize %}
 
 {% block content %}
     {% get_comment_count for object as comment_count %}
     <h1>{{object.title}} <small>{{ object.create_time|naturalday:"d E y" }}</small></h1>
     <p>
         {% for tag in object.get_tags %}
-            <a href="{% url 'posts.list.tag' tag=tag %}" class="label">{{tag}}</a>
+            <a href="{% url 'posts.list.tag' tag=tag %}" class="label">{{tag}}</a>&nbsp;
         {% endfor %}
         {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
     </p>
 
-    <p>{{object.content}}</p>
+    <p>{{object.content|apply_markup:"markdown"}}</p>
 
-    <div class="row">
-        <div class="span12"><br /></div>
-    </div>
     {# comments #}
+    <hr />
+    <h3>Comments</h3>
     {% get_comment_list for object as comment_list %}
     {% for comment in comment_list %}
         <blockquote>

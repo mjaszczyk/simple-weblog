@@ -119,6 +119,7 @@ INSTALLED_APPS = (
 
     'south',
     'tagging',
+    'django_markup',
 
     'weblog.posts',
     'django.contrib.comments',
