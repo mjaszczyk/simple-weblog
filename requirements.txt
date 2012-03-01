@@ -3,4 +3,5 @@ south==0.7.3
 django-autofixture==0.2.2
 django-tagging==0.3.1
 django-markup==0.4
+django-bfm==0.6
 Markdown==2.1.1

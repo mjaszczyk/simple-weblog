@@ -13,20 +13,20 @@ BASE_POSTS_QS = Post.objects.all()
 urlpatterns = patterns('',
     
     # RSS feed
-    url(r'feed/$', PostsFeed(), name='posts.feed'),
+    url(r'^feed/$', PostsFeed(), name='posts.feed'),
 
     # Post detail URL
-    url(r'post/([a-zA-Z0-9\-_]+),(?P<object_id>\d+)/$', object_detail,
+    url(r'^post/([a-zA-Z0-9\-_]+),(?P<object_id>\d+)/$', object_detail,
         {'queryset': BASE_POSTS_QS}, name='posts.detail'),
 
     # Posts list by year
-    url(r'archive/(?P<year>\d+)/$', archive_year, {'queryset': BASE_POSTS_QS,
+    url(r'^archive/(?P<year>\d+)/$', archive_year, {'queryset': BASE_POSTS_QS,
         'make_object_list': True, 'date_field': 'create_time'}, name='posts.list.archive'),
 
     # Posts list by tag
-    url(r'tag/(?P<tag>\w+)/$', tagged_object_list, {'queryset_or_model': BASE_POSTS_QS},
+    url(r'^tag/(?P<tag>\w+)/$', tagged_object_list, {'queryset_or_model': BASE_POSTS_QS},
         name='posts.list.tag'),
 
     # Posts list
-    url(r'$', object_list, {'queryset': BASE_POSTS_QS}, name='posts.list'),
+    url(r'^$', object_list, {'queryset': BASE_POSTS_QS}, name='posts.list'),
 )
