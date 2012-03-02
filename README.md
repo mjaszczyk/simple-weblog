@@ -1,4 +1,4 @@
-Simple Weblog based on [Django Framework](http://www.djangoproject.com/)
+Simple Weblog based on Django Framework
 ============================================================
 
 It is a very simple weblog build using available framework features and 
