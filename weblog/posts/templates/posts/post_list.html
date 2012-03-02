@@ -5,15 +5,17 @@
 
 {% block content %}
     {% for post in object_list %}
-        {% get_comment_count for post as comment_count %}
-        <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a>&nbsp;
-            <small>{{ post.create_time|naturalday:"d E y" }}</small>
-        </h2>
-        {% for tag in post.get_tags %}
-            <a href="{% url 'posts.list.tag' tag=tag %}" class="label">{{tag}}</a>&nbsp;
-        {% endfor %}
-        {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
-        <p>{{post.content|apply_markup:"markdown"|striptags|truncatewords:20}}</p>
+        <div class="post hero-unit">
+            {% get_comment_count for post as comment_count %}
+            <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a>&nbsp;
+                <small>{{ post.create_time|naturalday:"d E y" }}</small>
+            </h2>
+            {% for tag in post.get_tags %}
+                <a href="{% url 'posts.list.tag' tag=tag.name %}" class="label">{{tag}}</a>&nbsp;
+            {% endfor %}
+            {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
+            <p>{{post.content|apply_markup:"markdown"|striptags|truncatewords:200}}</p>
+        </div>
     {% endfor %}
 
     {# pagination #}

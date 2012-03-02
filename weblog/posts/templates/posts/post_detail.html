@@ -12,7 +12,10 @@
         {% if comment_count %}<i class="icon-comment"></i>{{comment_count}}{% endif %}
     </p>
 
-    <p>{{object.content|apply_markup:"markdown"}}</p>
+
+    <div id="post-content" class="hero-unit">
+        {{object.content|apply_markup:"markdown"}}
+    </div>
 
     {# comments #}
     <hr />

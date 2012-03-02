@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'south',
+    'autofixture',
     'tagging',
     'django_markup',
 

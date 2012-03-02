@@ -9,6 +9,7 @@ from .feeds import PostsFeed
 
 
 BASE_POSTS_QS = Post.objects.all()
+PAGE_LIMIT = 10
 
 urlpatterns = patterns('',
     
@@ -21,12 +22,13 @@ urlpatterns = patterns('',
 
     # Posts list by year
     url(r'^archive/(?P<year>\d+)/$', archive_year, {'queryset': BASE_POSTS_QS,
-        'make_object_list': True, 'date_field': 'create_time'}, name='posts.list.archive'),
+        'make_object_list': True, 'date_field': 'create_time'},
+        name='posts.list.archive'),
 
     # Posts list by tag
-    url(r'^tag/(?P<tag>\w+)/$', tagged_object_list, {'queryset_or_model': BASE_POSTS_QS},
-        name='posts.list.tag'),
+    url(r'^tag/(?P<tag>[^/]+)/$', tagged_object_list, {'paginate_by': PAGE_LIMIT,
+        'queryset_or_model': BASE_POSTS_QS}, name='posts.list.tag'),
 
     # Posts list
-    url(r'^$', object_list, {'queryset': BASE_POSTS_QS}, name='posts.list'),
+    url(r'^$', object_list, {'paginate_by': PAGE_LIMIT, 'queryset': BASE_POSTS_QS}, name='posts.list'),
 )
